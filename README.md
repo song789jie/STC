@@ -7,11 +7,11 @@ We currently offer a demo for the PyTorch implementation of "Scalable Tactile Co
 # Dataset:
 For the dataset, please refer to [TUM dataset](https://cloud.lmt.ei.tum.de/s/pDEPZnGomQYtH4c).
 
-We employed a 5-fold cross-validation approach, with each fold containing the files listed in ./cross_validation/fold_x.txt.
-
 # Environment:
 
 python 3.8
 
-torch 2.0.1+cu118
+torch 2.0.1+cu117
+
+
 
