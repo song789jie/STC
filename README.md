@@ -13,5 +13,7 @@ python 3.8
 
 torch 2.0.1+cu117
 
+vector_quantize_pytorch 1.8.1
 
+The FSQ (stands for Finite Scalar Quantization) relies on lucidrains' [repository](https://github.com/lucidrains/vector-quantize-pytorch).
 
