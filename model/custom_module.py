@@ -1,11 +1,8 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
-from torchinfo import summary
 import math
 from functools import partial
-
-from einops import rearrange
 
 
 class MultiScaleDiscriminator(nn.Module):
@@ -404,43 +401,6 @@ class CausalConvTranspose1d(nn.Module):
         return out
 
 
-class SqueezeExcite(nn.Module):
-    def __init__(self, dim, reduction_factor=4, dim_minimum=8):
-        super().__init__()
-        dim_inner = max(dim_minimum, dim // reduction_factor)
-        self.net = nn.Sequential(
-            nn.Conv1d(dim, dim_inner, 1),
-            nn.SiLU(),
-            nn.Conv1d(dim_inner, dim, 1),
-            nn.Sigmoid()
-        )
-
-    def forward(self, x):
-        seq, device = x.shape[-2], x.device
-
-        # cumulative mean - since it is autoregressive
-        cum_sum = x.cumsum(dim=-2)
-        # print('cum_sum', cum_sum.shape)
-        denom = torch.arange(1, seq + 1, device=device).float()
-        cum_mean = cum_sum / rearrange(denom, 'n -> n 1')
-
-        # glu gate
-
-        gate = self.net(cum_mean)
-        # print(gate.shape)
-
-        return x * gate
-
 
 if __name__ == '__main__':
-    # print(MultiScaleDiscriminator())
-    # summary(MultiScaleDiscriminator(), (42, 1, 64))
-    # test = MLP_with_stats(output_dim=1)(x=torch.randn((42, 1, 64)), stats=torch.randn((42, 1, 1)))
-
-    # summary(MLP_with_stats(output_dim=1), input_size=[(42, 1, 64), (42, 1, 1)])
-
-    # summary(PositionalEmbedding(d_model=64), input_size=(42, 1, 2800))
-    # summary(TokenEmbedding(c_in=1, d_model=1), input_size=(42, 1, 64))
-    # summary(DataEmbedding(c_in=1, d_model=1), input_size=(42, 1, 64))
-
-    summary(DSAttention_Layer(DSAttention()), input_size=(42, 1, 64))
+    pass
