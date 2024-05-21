@@ -1,5 +1,5 @@
 # Scalable Tactile Coding (STC)
-We currently offer a demo for the PyTorch implementation of "Scalable Tactile Coding" along with pretrained weights. Detailed training and evaluation procedures will be available soon.
+We currently offer a demo for the PyTorch implementation of "Scalable Tactile Coding" along with pretrained weights. Detailed training and testing procedures will be available soon.
 
 # Demo: 
     python ./stc_demo.py
