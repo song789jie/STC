@@ -1,6 +1,6 @@
 
 
-def float_to_12bit(num):
+def mean_float_to_12bit(num):
     if num < -1 or num > 1:
         raise ValueError("Number out of range (-1, 1)")
 
@@ -28,7 +28,7 @@ def float_to_12bit(num):
     return bit_representation
 
 
-def bit_to_float(bit_str):
+def mean_bit_to_float(bit_str):
     if len(bit_str) != 12 or not all(c in '01' for c in bit_str):
         raise ValueError("Input must be a 12-bit binary string")
 
@@ -50,4 +50,46 @@ def bit_to_float(bit_str):
     return num
 
 
+def std_float_to_12bit(num):
+    if num < -0.5 or num > 0.5:
+        raise ValueError("Number out of range. Must be between -0.5 and 0.5")
+
+    # Determine the sign bit
+    if num < 0:
+        sign_bit = '1'
+        num = -num  # Make the number positive for further processing
+    else:
+        sign_bit = '0'
+
+    # Scale the number to fit in 11 bits
+    scaled_num = int(num * (2 ** 11))
+
+    # Convert the scaled number to binary and pad to 11 bits
+    fractional_bits = format(scaled_num, '011b')
+
+    # Combine the sign bit and fractional bits
+    binary_representation = sign_bit + fractional_bits
+
+    return binary_representation
+
+
+def std_bit_to_float(binary_code):
+    if len(binary_code) != 12:
+        raise ValueError("Binary code must be 12 bits long")
+
+    # Extract the sign bit and fractional bits
+    sign_bit = binary_code[0]
+    fractional_bits = binary_code[1:]
+
+    # Convert the fractional bits to an integer
+    fractional_num = int(fractional_bits, 2)
+
+    # Scale the number back to the original range
+    num = fractional_num / (2**11)
+
+    # Apply the sign
+    if sign_bit == '1':
+        num = -num
+
+    return num
 

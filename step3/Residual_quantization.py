@@ -70,7 +70,17 @@ def non_uniform_quant(tensor, p_set):
     return data_q, idxs
 
 
+def non_uniform_dequant(idxs, p_set):
+    def p_dequant(idxs, value_s):
+        idxs = torch.tensor(idxs)
+        shape = idxs.shape
+        x_hat = value_s[idxs].view(shape)
+        return x_hat
 
+    data_q = p_dequant(idxs, p_set)
+    data_q = data_q * 2.0
+
+    return data_q
 
 
 
