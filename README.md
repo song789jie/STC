@@ -17,3 +17,5 @@ vector_quantize_pytorch 1.8.1
 
 The FSQ (stands for Finite Scalar Quantization) relies on lucidrains' [repository](https://github.com/lucidrains/vector-quantize-pytorch).
 
+# Metrics:
+[vibromaf](https://github.com/hofbi/vibromaf) 0.0.7 
